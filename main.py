@@ -59,7 +59,7 @@ def main():
         text = 'Блок 1. Дверь в тренерское помещение. Дверь не соотвутствует размерам в спецификации. Составить акт, и в случае косяка производителя - написать претензию'
     
     fontsize = 16
-    font_name = 'roboto'
+    font_name = 'robotomono-bold'
     font = ImageFont.truetype(f"./fonts/{font_name}.ttf", fontsize)
     text_color = (255,255,0)
     padding_top = 10
