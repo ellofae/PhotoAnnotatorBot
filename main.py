@@ -48,7 +48,7 @@ def sender_mark(image_wrapper, message_sender, text_start, font, text_color, fon
         draw_img.text((padding_left, y_text), 
                   line, font=font, fill=text_color)
         y_text += fontsize*spacing
-    
+
 def main():
     image_name = sys.argv[1]
     message_sender = sys.argv[2]
@@ -67,10 +67,7 @@ def main():
     padding_left = 15
     spacing = 1
     
-    
     image = Image.open(f'./images/{image_name}')
-    #font, fontsize = get_proper_font(image, text)
-    print(image.width)
     
     image_wrapper, bound_size = make_wrapper(fontsize, text, image, spacing, padding_bottom)
     text_start_height = image_wrapper.height - int(bound_size) + padding_top
