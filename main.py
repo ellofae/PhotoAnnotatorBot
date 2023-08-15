@@ -1,24 +1,47 @@
 import textwrap
+import math
 import sys
 
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 
+font_chars = 'АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯяabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+def get_text_wrapper(font, image, text):
+    avg_chat_width = sum(font.getbbox(char)[2] for char in font_chars) / len(font_chars)
+    max_char_count = int((image.size[0] * .95) / avg_chat_width )
+    text = textwrap.fill(text=text, width=max_char_count)
     
+    return text, max_char_count
+
 def add_message(image, text, font, text_color, text_start_height, fontsize, spacing, padding_left):
     draw_img = ImageDraw.Draw(image)
     y_text = text_start_height
-    lines = textwrap.wrap(text, width=image.width // 10)
     
-    for line in lines:
-        draw_img.text((padding_left, y_text), 
-                  line, font=font, fill=text_color)
-        y_text += fontsize*spacing
+    # text = textwrap.fill(text=text, width=60)
+    # print(text)
+    #
+    #
+    # avg_chat_width = sum(font.getbbox(char)[2] for char in font_chars) / len(font_chars)
+    # max_char_count = int((image.size[0] * .95) / avg_chat_width )
+    # text = textwrap.fill(text=text, width=max_char_count)
+    text, max_char_count = get_text_wrapper(font, image, text)
+    draw_img.text((padding_left, y_text), text, font=font, fill=text_color, align='left')
+    
+    # lines = textwrap.wrap(text, width=image.width // 10)
+    
+    # for line in lines:
+    #     draw_img.text((padding_left, y_text), 
+    #               line, font=font, fill=text_color)
+    #     y_text += fontsize*spacing
         
-    return y_text
+    #return y_text
+    print(fontsize*spacing*math.ceil((len(text) / max_char_count)))
+    return y_text + fontsize*spacing * math.ceil((len(text) / max_char_count))
+    
 
 def make_wrapper(fontsize, text, image, spacing, padding_bottom):
-    sender_mark_space = 40 + padding_bottom
+    sender_mark_space = 45 + padding_bottom
     
     lines = textwrap.wrap(text, width=image.width // 10)
     
@@ -32,22 +55,39 @@ def make_wrapper(fontsize, text, image, spacing, padding_bottom):
     
     return wrapper, extra_bound_size
 
-def sender_mark(image_wrapper, message_sender, text_start, font, text_color, fontsize, spacing, padding_left):
+def sender_mark(image_wrapper, message_sender, text_start, font, text_color, padding_left):
     current_time = datetime.now()
+    text_top_padding = 5
     
     date = current_time.strftime('%Y-%m-%d')
     timer = current_time.strftime('%H:%M')
     
     text =  f'@{message_sender}, {date}, {timer}'
-    lines = textwrap.wrap(text, width=image_wrapper.width//10)
+    #lines = textwrap.wrap(text, width=image_wrapper.width//10)
     
     draw_img = ImageDraw.Draw(image_wrapper)
     
-    y_text = text_start
-    for line in lines:
-        draw_img.text((padding_left, y_text), 
-                  line, font=font, fill=text_color)
-        y_text += fontsize*spacing
+    y_text = text_start + text_top_padding
+    # for line in lines:
+    #     draw_img.text((padding_left, y_text), 
+    #               line, font=font, fill=text_color)
+    #     y_text += fontsize*spacing
+    text, _ = get_text_wrapper(font, image_wrapper, text)
+    draw_img.text((padding_left, y_text), text, font=font, fill=text_color, align='left')
+
+# def get_dynamic_fontsize(image, text, font_name):
+#     font_size = 1
+#     font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
+#     print("size:", image.width)
+#     print(font.getbbox(text))
+#     while font.getbbox(text)[2] < image.width:
+#         print(font.getbbox(text)[2])
+#         font_size += 1
+#         font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
+#     font_size -= 1
+#     print(font_size)
+
+#     return font, font_size
 
 def main():
     image_name = sys.argv[1]
@@ -74,7 +114,7 @@ def main():
     text_start_height = image_wrapper.height - int(bound_size) + padding_top
     
     text_end_line = add_message(image_wrapper, text, font, text_color, text_start_height, fontsize, spacing, padding_left)
-    sender_mark(image_wrapper, message_sender, text_end_line + padding_top, font, text_color, fontsize, spacing, padding_left)
+    sender_mark(image_wrapper, message_sender, text_end_line + padding_top, font, text_color, padding_left)
     
     image_wrapper.save(f'./results/{image_name}')
 
