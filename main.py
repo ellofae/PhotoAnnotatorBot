@@ -5,26 +5,25 @@ from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 
     
-def add_message(image, text, font, text_color, text_start_height, fontsize, spacing):
-    padding_left = 20
-    
+def add_message(image, text, font, text_color, text_start_height, fontsize, spacing, padding_left):
     draw_img = ImageDraw.Draw(image)
-    #image_width, _ = image.size
     y_text = text_start_height
-    lines = textwrap.wrap(text, width=image.width//10)
+    lines = textwrap.wrap(text, width=image.width // 10)
     
     for line in lines:
-        #line_width = font.getlength(line)
+        line_width = font.getlength(line)
         # (image_width - line_width) / 2
+        print((image.width - line_width))
         draw_img.text((padding_left, y_text), 
                   line, font=font, fill=text_color)
         y_text += fontsize*spacing
+        
+    return y_text
 
-def make_wrapper(fontsize, text, image, spacing):
-    # image.width//10
-    sender_mark_space = 40
+def make_wrapper(fontsize, text, image, spacing, padding_bottom):
+    sender_mark_space = 40 + padding_bottom
     
-    lines = textwrap.wrap(text, width=image.width//10)
+    lines = textwrap.wrap(text, width=image.width // 10)
     
     extra_bound_size = 0
     for _ in lines:
@@ -36,8 +35,22 @@ def make_wrapper(fontsize, text, image, spacing):
     
     return wrapper, extra_bound_size
 
-# def sender_mark(image_wrapper, message_sender):
-#     current_time = datetime.now()
+def sender_mark(image_wrapper, message_sender, text_start, font, text_color, fontsize, spacing, padding_left):
+    current_time = datetime.now()
+    
+    date = current_time.strftime('%Y-%m-%d')
+    timer = current_time.strftime('%H:%M')
+    
+    text =  f'@{message_sender}, {date}, {timer}'
+    lines = textwrap.wrap(text, width=image_wrapper.width//10)
+    
+    draw_img = ImageDraw.Draw(image_wrapper)
+    
+    y_text = text_start
+    for line in lines:
+        draw_img.text((padding_left, y_text), 
+                  line, font=font, fill=text_color)
+        y_text += fontsize*spacing
     
 def main():
     image_name = sys.argv[1]
@@ -51,17 +64,21 @@ def main():
     fontsize = 16
     font = ImageFont.truetype("./fonts/arial.ttf", fontsize)
     text_color = (255,255,0)
-    padding_top = 8
+    padding_top = 10
+    padding_bottom = 10
+    padding_left = 15
     spacing = 1
     
     
     image = Image.open(f'./images/{image_name}')
+    #font, fontsize = get_proper_font(image, text)
+    print(image.width)
     
-    image_wrapper, bound_size = make_wrapper(fontsize, text, image, spacing)
+    image_wrapper, bound_size = make_wrapper(fontsize, text, image, spacing, padding_bottom)
     text_start_height = image_wrapper.height - int(bound_size) + padding_top
     
-    add_message(image_wrapper, text, font, text_color, text_start_height, fontsize, spacing)
-   # sender_mark(image_wrapper, message_sender)
+    text_end_line = add_message(image_wrapper, text, font, text_color, text_start_height, fontsize, spacing, padding_left)
+    sender_mark(image_wrapper, message_sender, text_end_line + padding_top, font, text_color, fontsize, spacing, padding_left)
     
     image_wrapper.save(f'./results/{image_name}')
 
