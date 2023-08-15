@@ -11,9 +11,6 @@ def add_message(image, text, font, text_color, text_start_height, fontsize, spac
     lines = textwrap.wrap(text, width=image.width // 10)
     
     for line in lines:
-        line_width = font.getlength(line)
-        # (image_width - line_width) / 2
-        print((image.width - line_width))
         draw_img.text((padding_left, y_text), 
                   line, font=font, fill=text_color)
         y_text += fontsize*spacing
@@ -62,7 +59,8 @@ def main():
         text = 'Блок 1. Дверь в тренерское помещение. Дверь не соотвутствует размерам в спецификации. Составить акт, и в случае косяка производителя - написать претензию'
     
     fontsize = 16
-    font = ImageFont.truetype("./fonts/arial.ttf", fontsize)
+    font_name = 'roboto'
+    font = ImageFont.truetype(f"./fonts/{font_name}.ttf", fontsize)
     text_color = (255,255,0)
     padding_top = 10
     padding_bottom = 10
