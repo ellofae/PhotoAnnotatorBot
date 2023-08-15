@@ -96,19 +96,18 @@ def sender_mark(image_wrapper, message_sender, text_start, font, text_color, pad
     
     draw_img.text((padding_left, y_text), text, font=font, fill=text_color, align='left')
 
-# def get_dynamic_fontsize(image, text, font_name):
-#     font_size = 1
-#     font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
-#     print("size:", image.width)
-#     print(font.getbbox(text))
-#     while font.getbbox(text)[2] < image.width:
-#         print(font.getbbox(text)[2])
-#         font_size += 1
-#         font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
-#     font_size -= 1
-#     print(font_size)
+def get_dynamic_fontsize(image, text, font_name):
+    font_size = 17
+    font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
 
-#     return font, font_size
+    print(font.getbbox(text))
+    while font.getbbox(text)[2] - font.getbbox(text)[0] < image.width:
+        font_size += 1
+        font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
+    
+    font_size -= 1
+    print("font: ", font_size)
+    return font, font_size
 
 def main():
     image_name = sys.argv[1]
@@ -119,9 +118,9 @@ def main():
     else:
         text = 'Блок 1. Дверь в тренерское помещение. Дверь не соотвутствует размерам в спецификации. Составить акт, и в случае косяка производителя - написать претензию'
     
-    fontsize = 16
+    #fontsize = 16
     font_name = 'robotomono-bold'
-    font = ImageFont.truetype(f"./fonts/{font_name}.ttf", fontsize)
+    #font = ImageFont.truetype(f"./fonts/{font_name}.ttf", fontsize)
     text_color = (255,255,0)
     padding_top = 10
     padding_bottom = 10
@@ -130,7 +129,7 @@ def main():
     spacing = 1
     
     image = Image.open(f'./images/{image_name}')
-    #font, fontsize = get_dynamic_fontsize(image, text, font_name)
+    font, fontsize = get_dynamic_fontsize(image, text, font_name)
     
     extra_space_size = get_extra_space_size(message_sender, font, image, fontsize, spacing)
     
