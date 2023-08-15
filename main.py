@@ -68,6 +68,7 @@ def main():
     spacing = 1
     
     image = Image.open(f'./images/{image_name}')
+    #font, fontsize = get_dynamic_fontsize(image, text, font_name)
     
     image_wrapper, bound_size = make_wrapper(fontsize, text, image, spacing, padding_bottom)
     text_start_height = image_wrapper.height - int(bound_size) + padding_top
