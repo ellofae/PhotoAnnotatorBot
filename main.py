@@ -40,15 +40,16 @@ def add_message(image, text, font, text_color, text_start_height, fontsize, spac
     return y_text + fontsize*spacing * math.ceil((len(text) / max_char_count))
     
 
-def make_wrapper(fontsize, text, image, spacing, padding_bottom):
+def make_wrapper(font, fontsize, text, image, spacing, padding_bottom):
     sender_mark_space = 45 + padding_bottom
     
-    lines = textwrap.wrap(text, width=image.width // 10)
+    #lines = textwrap.wrap(text, width=image.width // 10)
     
-    extra_bound_size = 0
-    for _ in lines:
-        extra_bound_size += fontsize*spacing
-    extra_bound_size += sender_mark_space
+    text, max_char_count = get_text_wrapper(font, image, text)
+    #extra_bound_size = 0
+    # for _ in lines:
+    #     extra_bound_size += fontsize*spacing
+    extra_bound_size = sender_mark_space + fontsize*spacing * math.ceil((len(text) / max_char_count))
         
     wrapper = Image.new("RGB", (image.width, image.height + int(extra_bound_size)), "black")
     wrapper.paste(image, (0,0))
@@ -62,7 +63,7 @@ def sender_mark(image_wrapper, message_sender, text_start, font, text_color, pad
     date = current_time.strftime('%Y-%m-%d')
     timer = current_time.strftime('%H:%M')
     
-    text =  f'@{message_sender}, {date}, {timer}'
+    text = f'@{message_sender}, {date}, {timer}'
     #lines = textwrap.wrap(text, width=image_wrapper.width//10)
     
     draw_img = ImageDraw.Draw(image_wrapper)
@@ -110,7 +111,7 @@ def main():
     image = Image.open(f'./images/{image_name}')
     #font, fontsize = get_dynamic_fontsize(image, text, font_name)
     
-    image_wrapper, bound_size = make_wrapper(fontsize, text, image, spacing, padding_bottom)
+    image_wrapper, bound_size = make_wrapper(font, fontsize, text, image, spacing, padding_bottom)
     text_start_height = image_wrapper.height - int(bound_size) + padding_top
     
     text_end_line = add_message(image_wrapper, text, font, text_color, text_start_height, fontsize, spacing, padding_left)
