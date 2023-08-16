@@ -2,6 +2,8 @@
 
 ____
 Запуск бота: python main.py
+
+* Добавить .env файл с переменной API_TOKEN={bot_token}
 ____
 Запуск утилиты отдельно(при использовании sys.args): python main.py {image_name}.{format} {user_name} {text:OPTIONAL}
 * {text} является опциональным, если не указан, то текст используется по умолчанию.

@@ -34,8 +34,7 @@ async def handle_photo(message: types.Message):
     file_name = photo.file_id + '.' + file_extension
     await bot.download_file(file_path, './image_service/images/' + file_name)
 
-    # CHANGE '' to text later, now debugging
-    start_processing(file_name, current_user, '')
+    start_processing(file_name, current_user, caption_text)
 
     with open('./image_service/results/' + file_name, "rb") as photo_file:
         photo_input = InputFile(photo_file)
