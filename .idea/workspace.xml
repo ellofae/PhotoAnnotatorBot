@@ -5,32 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38c64e07-03a9-45cc-a782-6158de91abe0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/arial.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/liberation-bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/roboto-medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/robotomono-bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main6.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/main9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main6.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/main9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +53,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1692171770175</updated>
-      <workItem from="1692171781395" duration="33233000" />
+      <workItem from="1692171781395" duration="33706000" />
     </task>
     <servers />
   </component>
