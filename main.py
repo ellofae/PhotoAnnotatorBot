@@ -1,99 +1,47 @@
-import textwrap
-import math
-import sys
+from decouple import config
+from aiogram import Bot, Dispatcher, executor, types
+from aiogram.types import ContentType, Message, InputFile
 
-from datetime import datetime
-from PIL import Image, ImageDraw, ImageFont
+from image_service.main import start_processing
 
-def get_box_sizes(text, font):
-    (width, baseline), _ = font.font.getsize(text)
+API_TOKEN = config('API_TOKEN')
 
-    return baseline
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
 
-def get_message_data(message_sender):
-    current_time = datetime.now()
+@dp.message_handler(commands=['start'])
+async def start_command(message: Message):
+    await message.answer_sticker('CAACAgIAAxkBAAMhZNzq4JtQw4N5vyF_orR_VbvQdyoAAtgPAAJI8mBLFfvE2nh0a5gwBA')
+    await message.reply('Привет! Отправь фото и текст :)')
 
-    date = current_time.strftime('%Y-%m-%d')
-    timer = current_time.strftime('%H:%M')
 
-    text = f'@{message_sender}, {date}, {timer}'
-    return text
+@dp.message_handler(content_types=types.ContentType.PHOTO)
+async def handle_photo(message: types.Message):
+    current_user = message.from_user.username
 
-def add_main_text(text, font, text_color, image, padding_left, start_position, padding_top):
-    draw_img = ImageDraw.Draw(image)
-    y_text = start_position + padding_top
+    photo = message.photo[-1]
 
-    for line in text:
-        draw_img.text((padding_left, y_text),
-              line, font=font, fill=text_color)
-        y_text += get_box_sizes(line, font)
+    caption_text = message.caption
+    if not caption_text:
+        await message.answer("Ошибка: подпись к фото отсутствует")
+        return
 
-    return y_text
+    file = await bot.get_file(photo.file_id)
+    file_path = file.file_path
+    file_info = await photo.get_file()
 
-def add_sender_text(text, font, text_color, image, padding_left, start_position, padding_top):
-    draw_img = ImageDraw.Draw(image)
-    y_text = start_position + padding_top
+    file_extension = file_info.file_path.split(".")[-1]
+    file_name = photo.file_id + '.' + file_extension
+    await bot.download_file(file_path, './image_service/images/' + file_name)
 
-    for line in text:
-        draw_img.text((padding_left, y_text),
-                      line, font=font, fill=text_color)
-        y_text += get_box_sizes(line, font)
+    start_processing(file_name, current_user, '')
 
-def make_text_wrapper(main_text, sender_text, font, image, text_color, padding_left, padding_top):
-    main_lines = textwrap.wrap(main_text)
-    sender_lines = textwrap.wrap(sender_text)
+    with open('./image_service/results/' + file_name, "rb") as photo_file:
+        photo_input = InputFile(photo_file)
+        await message.answer_photo(photo=photo_input, caption='done')
 
-    main_lines_height = 0
-    for line in main_lines:
-        main_lines_height += get_box_sizes(line, font)
 
-    sender_lines_height = 0
-    for line in sender_lines:
-        sender_lines_height += get_box_sizes(line, font)
 
-    sum_heights = main_lines_height + sender_lines_height
-    all_paddings = padding_top * 2
-    wrapper = Image.new("RGB", (image.width, sum_heights + all_paddings), "black")
 
-    end_height = add_main_text(main_lines, font, text_color, wrapper, padding_left, 0, padding_top)
-    add_sender_text(sender_lines, font, text_color, wrapper, padding_left, end_height, padding_top)
-
-    return wrapper
-
-def combine_images(image, text_wrapper):
-    image_wrapper = Image.new("RGB", (image.width, image.height + text_wrapper.height), "white")
-    image_wrapper.paste(image, (0, 0))
-    image_wrapper.paste(text_wrapper, (0, image.height))
-
-    return image_wrapper
-
-def main():
-    image_name = sys.argv[1]
-    message_sender = sys.argv[2]
-    text = ""
-    if len(sys.argv) == 4:
-        text = sys.argv[3]
-    else:
-        text = 'Блок 1. Дверь в тренерское помещение. Дверь не соотвутствует размерам в спецификации. Составить акт, и в случае косяка производителя - написать претензию'
-
-    font_name = 'arial'
-    text_color = (255, 255, 0)
-    padding_left = 15
-    padding_top = 15
-
-    image = Image.open(f'./images/{image_name}')
-
-    fontsize = image.size[0] * 0.02
-    if fontsize < 12:
-        fontsize = 12
-    font = ImageFont.truetype(f"./fonts/{font_name}.ttf", fontsize)
-
-    sender_text = get_message_data(message_sender)
-
-    text_wrapper = make_text_wrapper(text, sender_text, font, image, text_color, padding_left, padding_top)
-    resulting_image = combine_images(image, text_wrapper)
-
-    resulting_image.save(f'./results/{image_name}')
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+   executor.start_polling(dp, skip_updates=True)
