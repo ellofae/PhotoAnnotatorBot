@@ -5,109 +5,67 @@ import sys
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 
-font_chars = 'АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯяabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+def get_box_sizes(text, font):
+    (width, baseline), _ = font.font.getsize(text)
 
-def get_text_wrapper(font, image, text):
-    avg_chat_width = sum(font.getbbox(char)[2] for char in font_chars) / len(font_chars)
-    max_char_count = int((image.size[0] * .95) / avg_chat_width )
-    text = textwrap.fill(text=text, width=max_char_count)
-    
-    return text, max_char_count
+    return baseline
 
-def add_message(image, text, font, text_color, text_start_height, fontsize, spacing, padding_left):
-    draw_img = ImageDraw.Draw(image)
-    y_text = text_start_height
-    
-    # text = textwrap.fill(text=text, width=60)
-    # print(text)
-    #
-    #
-    # avg_chat_width = sum(font.getbbox(char)[2] for char in font_chars) / len(font_chars)
-    # max_char_count = int((image.size[0] * .95) / avg_chat_width )
-    # text = textwrap.fill(text=text, width=max_char_count)
-    text, max_char_count = get_text_wrapper(font, image, text)
-    draw_img.text((padding_left, y_text), text, font=font, fill=text_color, align='left')
-    
-    # lines = textwrap.wrap(text, width=image.width // 10)
-    
-    # for line in lines:
-    #     draw_img.text((padding_left, y_text), 
-    #               line, font=font, fill=text_color)
-    #     y_text += fontsize*spacing
-        
-    #return y_text
-    print(y_text + fontsize*spacing*math.ceil((len(text) / max_char_count)))
-    return y_text + fontsize*spacing * math.ceil((len(text) / max_char_count))
-    
-def get_marking_data(message_sender):
+def get_message_data(message_sender):
     current_time = datetime.now()
-    
+
     date = current_time.strftime('%Y-%m-%d')
     timer = current_time.strftime('%H:%M')
-    
+
     text = f'@{message_sender}, {date}, {timer}'
     return text
 
-def get_extra_space_size(message_sender, font, image, fontsize, spacing):
-    text = get_marking_data(message_sender)
-    text, max_char_count = get_text_wrapper(font, image, text)
-    
-    return fontsize*spacing * math.ceil((len(text) / max_char_count)) * 3
-    
+def add_main_text(text, font, text_color, image, padding_left, start_position, padding_top):
+    draw_img = ImageDraw.Draw(image)
+    y_text = start_position + padding_top
 
-def make_wrapper(font, fontsize, text, image, spacing, padding_bottom, padding_top, extra_space_size):
-    sender_mark_space = extra_space_size + padding_bottom + padding_top
-    
-    #lines = textwrap.wrap(text, width=image.width // 10)
-    
-    text, max_char_count = get_text_wrapper(font, image, text)
-    #extra_bound_size = 0
-    # for _ in lines:
-    #     extra_bound_size += fontsize*spacing
-    extra_bound_size = sender_mark_space + fontsize*spacing * math.ceil((len(text) / max_char_count))
-        
-    wrapper = Image.new("RGB", (image.width, image.height + int(extra_bound_size)), "black")
-    wrapper.paste(image, (0,0))
-    
-    return wrapper, extra_bound_size
+    for line in text:
+        draw_img.text((padding_left, y_text),
+              line, font=font, fill=text_color)
+        y_text += get_box_sizes(line, font)
 
+    return y_text
 
+def add_sender_text(text, font, text_color, image, padding_left, start_position, padding_top):
+    draw_img = ImageDraw.Draw(image)
+    y_text = start_position + padding_top
 
-def sender_mark(image_wrapper, message_sender, text_start, font, text_color, padding_left, fontsize,spacing):
-    #current_time = datetime.now()
-    #text_top_padding = 5
-    
-    # date = current_time.strftime('%Y-%m-%d')
-    # timer = current_time.strftime('%H:%M')
-    
-    # text = f'@{message_sender}, {date}, {timer}'
-    text = get_marking_data(message_sender)
-    #lines = textwrap.wrap(text, width=image_wrapper.width//10)
-    
-    draw_img = ImageDraw.Draw(image_wrapper)
-    
-    #y_text = text_start # + text_top_padding
-    # for line in lines:
-    #     draw_img.text((padding_left, y_text), 
-    #               line, font=font, fill=text_color)
-    #     y_text += fontsize*spacing
-    text, max_char_count = get_text_wrapper(font, image_wrapper, text)
-    y_text = text_start + fontsize*spacing * math.ceil((len(text) / max_char_count))
-    
-    draw_img.text((padding_left, y_text), text, font=font, fill=text_color, align='left')
+    for line in text:
+        draw_img.text((padding_left, y_text),
+                      line, font=font, fill=text_color)
+        y_text += get_box_sizes(line, font)
 
-def get_dynamic_fontsize(image, text, font_name):
-    font_size = 17
-    font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
+def make_text_wrapper(main_text, sender_text, font, image, text_color, padding_left, padding_top):
+    main_lines = textwrap.wrap(main_text)
+    sender_lines = textwrap.wrap(sender_text)
 
-    print(font.getbbox(text))
-    while font.getbbox(text)[2] - font.getbbox(text)[0] < image.width:
-        font_size += 1
-        font = ImageFont.truetype(f"./fonts/{font_name}.ttf", font_size)
-    
-    font_size -= 1
-    print("font: ", font_size)
-    return font, font_size
+    main_lines_height = 0
+    for line in main_lines:
+        main_lines_height += get_box_sizes(line, font)
+
+    sender_lines_height = 0
+    for line in sender_lines:
+        sender_lines_height += get_box_sizes(line, font)
+
+    sum_heights = main_lines_height + sender_lines_height
+    all_paddings = padding_top * 2
+    wrapper = Image.new("RGB", (image.width, sum_heights + all_paddings), "black")
+
+    end_height = add_main_text(main_lines, font, text_color, wrapper, padding_left, 0, padding_top)
+    add_sender_text(sender_lines, font, text_color, wrapper, padding_left, end_height, padding_top)
+
+    return wrapper
+
+def combine_images(image, text_wrapper):
+    image_wrapper = Image.new("RGB", (image.width, image.height + text_wrapper.height), "white")
+    image_wrapper.paste(image, (0, 0))
+    image_wrapper.paste(text_wrapper, (0, image.height))
+
+    return image_wrapper
 
 def main():
     image_name = sys.argv[1]
@@ -117,30 +75,25 @@ def main():
         text = sys.argv[3]
     else:
         text = 'Блок 1. Дверь в тренерское помещение. Дверь не соотвутствует размерам в спецификации. Составить акт, и в случае косяка производителя - написать претензию'
-    
-    #fontsize = 16
-    font_name = 'robotomono-bold'
-    #font = ImageFont.truetype(f"./fonts/{font_name}.ttf", fontsize)
-    text_color = (255,255,0)
-    padding_top = 10
-    padding_bottom = 10
-    padding_left = 15
-    text_top_padding = 10
-    spacing = 1
-    
-    image = Image.open(f'./images/{image_name}')
-    font, fontsize = get_dynamic_fontsize(image, text, font_name)
-    
-    extra_space_size = get_extra_space_size(message_sender, font, image, fontsize, spacing)
-    
-    image_wrapper, bound_size = make_wrapper(font, fontsize, text, image, spacing, padding_bottom, padding_top, extra_space_size)
-    text_start_height = image_wrapper.height - int(bound_size) + padding_top
-    
-    text_end_line = add_message(image_wrapper, text, font, text_color, text_start_height, fontsize, spacing, padding_left)
-    sender_mark(image_wrapper, message_sender, text_end_line + text_top_padding, font, text_color, padding_left, fontsize, spacing)
-    
-    image_wrapper.save(f'./results/{image_name}')
 
-    
+    font_name = 'arial'
+    text_color = (255, 255, 0)
+    padding_left = 15
+    padding_top = 15
+
+    image = Image.open(f'./images/{image_name}')
+
+    fontsize = image.size[0] * 0.02
+    if fontsize < 12:
+        fontsize = 12
+    font = ImageFont.truetype(f"./fonts/{font_name}.ttf", fontsize)
+
+    sender_text = get_message_data(message_sender)
+
+    text_wrapper = make_text_wrapper(text, sender_text, font, image, text_color, padding_left, padding_top)
+    resulting_image = combine_images(image, text_wrapper)
+
+    resulting_image.save(f'./results/{image_name}')
+
 if __name__ == "__main__":
     main()
