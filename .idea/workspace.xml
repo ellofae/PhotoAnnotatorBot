@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38c64e07-03a9-45cc-a782-6158de91abe0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_service/fonts/liberation-bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_service/fonts/roboto-medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_service/fonts/robotomono-bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_service/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_service/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +52,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1692171770175</updated>
-      <workItem from="1692171781395" duration="34116000" />
+      <workItem from="1692171781395" duration="34974000" />
     </task>
     <servers />
   </component>

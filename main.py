@@ -38,7 +38,7 @@ async def handle_photo(message: types.Message):
 
     with open('./image_service/results/' + file_name, "rb") as photo_file:
         photo_input = InputFile(photo_file)
-        await message.answer_photo(photo=photo_input, caption='done')
+        await message.answer_photo(photo=photo_input)
 
 
 
