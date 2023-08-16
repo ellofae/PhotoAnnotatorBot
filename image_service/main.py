@@ -1,3 +1,4 @@
+import os
 import textwrap
 import math
 import sys
@@ -103,6 +104,10 @@ def combine_images(image, text_wrapper):
     image_wrapper.paste(text_wrapper, (0, image.height))
 
     return image_wrapper
+
+def delete_stored_image(image_name):
+    os.remove('./image_service/images/' + image_name)
+    os.remove('./image_service/results/' + image_name)
 
 def start_processing(image_name, message_sender, text):
     # image_name = sys.argv[1]

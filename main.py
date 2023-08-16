@@ -2,7 +2,7 @@ from decouple import config
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import ContentType, Message, InputFile
 
-from image_service.main import start_processing
+from image_service.main import start_processing, delete_stored_image
 
 API_TOKEN = config('API_TOKEN')
 
@@ -39,6 +39,8 @@ async def handle_photo(message: types.Message):
     with open('./image_service/results/' + file_name, "rb") as photo_file:
         photo_input = InputFile(photo_file)
         await message.answer_photo(photo=photo_input)
+
+    delete_stored_image(file_name)
 
 
 
