@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38c64e07-03a9-45cc-a782-6158de91abe0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/AgACAgIAAxkBAANFZN0VNM0vk1v2ZD4RaCIDt0GDw20AAh_OMRvbj-lK-fNEBP2KNpABAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/AgACAgIAAxkBAANJZN0VcXKaTY6JC0RM_6lp7qYDHL8AAvTOMRvbj-lKtFaDW2-P34oBAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/AgACAgIAAxkBAANNZN0Y764cL4RkBCoYTi16agkEaJoAAvTOMRvbj-lKtFaDW2-P34oBAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/AgACAgIAAxkBAANOZN0ZGo7LaBRGKm4QuwHexvvnlXkAAvTOMRvbj-lKtFaDW2-P34oBAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/AgACAgIAAxkBAANRZN0cNkYvROMXy-bSr9MUcd8GcJUAAg3PMRvbj-lKy1flD7pRkvABAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/AgACAgIAAxkBAANTZN0cWh3eus9jt1rXenZFmZKw-E8AAo7QMRtTFshKMk1EpurMV_YBAAMCAAN4AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/AgACAgIAAxkBAANVZN0lcKiyepgUCAva0kYLrMSxpi0AAvTOMRvbj-lKtFaDW2-P34oBAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/main6.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/main7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/main8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/images/main9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_service/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/AgACAgIAAxkBAANFZN0VNM0vk1v2ZD4RaCIDt0GDw20AAh_OMRvbj-lK-fNEBP2KNpABAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/AgACAgIAAxkBAANJZN0VcXKaTY6JC0RM_6lp7qYDHL8AAvTOMRvbj-lKtFaDW2-P34oBAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/AgACAgIAAxkBAANOZN0ZGo7LaBRGKm4QuwHexvvnlXkAAvTOMRvbj-lKtFaDW2-P34oBAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/AgACAgIAAxkBAANRZN0cNkYvROMXy-bSr9MUcd8GcJUAAg3PMRvbj-lKy1flD7pRkvABAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/AgACAgIAAxkBAANTZN0cWh3eus9jt1rXenZFmZKw-E8AAo7QMRtTFshKMk1EpurMV_YBAAMCAAN4AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/AgACAgIAAxkBAANVZN0lcKiyepgUCAva0kYLrMSxpi0AAvTOMRvbj-lKtFaDW2-P34oBAAMCAAN5AAMwBA.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/main6.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/main7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/main8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_service/results/main9.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +73,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1692171770175</updated>
-      <workItem from="1692171781395" duration="34974000" />
+      <workItem from="1692171781395" duration="41155000" />
     </task>
     <servers />
   </component>
