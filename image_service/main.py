@@ -1,10 +1,9 @@
 import os
 import textwrap
-import math
-import sys
-
 from datetime import datetime
+
 from PIL import Image, ImageDraw, ImageFont
+
 
 def get_box_sizes(text, font):
     (width, baseline), _ = font.font.getsize(text)
