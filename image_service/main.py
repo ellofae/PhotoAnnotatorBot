@@ -40,34 +40,9 @@ def add_sender_text(text, font, text_color, image, padding_left, start_position,
                       line, font=font, fill=text_color)
         y_text += get_box_sizes(line, font)
 
-# def custom_textwrap(text, font, max_width):
-#     temp = text.split()
-#     lines = []
-#
-#     line = ''
-#     for word in temp:
-#         (width, _), _ = font.font.getsize(line)
-#
-#         if width > max_width - 100:
-#             lines.append(line[:])
-#             line = word
-#         else:
-#             line += ' ' + word if len(line) != 0 else word
-#
-#     lines.append(line)
-#     return [f'{line}\n' for line in lines]
 
 def get_dynamic_textwrap_width(text, font, max_width):
     temp = text.split()
-
-    # line = ''
-    # for word in temp:
-    #     (width, _), _ = font.font.getsize(line)
-    # 
-    #     if width > max_width - 100:
-    #         return len(line)
-    #     else:
-    #         line += ' ' + word if len(line) != 0 else word
 
     line = ''
     for word in temp:
@@ -82,12 +57,6 @@ def get_dynamic_textwrap_width(text, font, max_width):
     return len(line)
 
 def make_text_wrapper(main_text, sender_text, font, image, text_color, background_color, padding_left, padding_top, padding_bottom):
-    # main_lines = textwrap.wrap(main_text)
-    # sender_lines = textwrap.wrap(sender_text)
-
-    #main_lines = custom_textwrap(main_text, font, image.width)
-    #sender_lines = custom_textwrap(sender_text, font, image.width)
-
     main_lines = textwrap.wrap(main_text, width=get_dynamic_textwrap_width(main_text, font, image.width))
     sender_lines = textwrap.wrap(sender_text, width=get_dynamic_textwrap_width(sender_text, font, image.width))
 

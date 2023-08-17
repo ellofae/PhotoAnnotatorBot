@@ -3,7 +3,5 @@ services:
     build: .
     container_name: bot_app
     command: python ./main.py
-    ports:
-    - 4000:4000
     volumes:
     - .:/usr/src/app
