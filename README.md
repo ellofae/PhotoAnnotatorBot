@@ -3,7 +3,19 @@
 ____
 Запуск бота: python main.py
 
-* NOTE: Добавить .env файл с переменной API_TOKEN={bot_token}
+* Пример .env файла:
+
+API_TOKEN={BOT_TOKEN}
+
+PADDING_TOP = 15
+PADDING_BOTTOM = 15
+PADDING_LEFT = 15
+
+TEXT_COLOR = #ffff00
+BACKGROUND_COLOR = #000000
+FONT_NAME = arial
+FONT_COEFFICIENT = 1
+
 ____
 Запуск утилиты отдельно(при использовании sys.args): python main.py {image_name}.{format} {user_name} {text:OPTIONAL}
 * {text} является опциональным, если не указан, то текст используется по умолчанию.

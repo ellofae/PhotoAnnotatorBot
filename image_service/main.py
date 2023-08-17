@@ -1,6 +1,7 @@
 import os
 import textwrap
 from datetime import datetime
+from decouple import config
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -59,18 +60,28 @@ def add_sender_text(text, font, text_color, image, padding_left, start_position,
 def get_dynamic_textwrap_width(text, font, max_width):
     temp = text.split()
 
+    # line = ''
+    # for word in temp:
+    #     (width, _), _ = font.font.getsize(line)
+    # 
+    #     if width > max_width - 100:
+    #         return len(line)
+    #     else:
+    #         line += ' ' + word if len(line) != 0 else word
+
     line = ''
     for word in temp:
-        (width, _), _ = font.font.getsize(line)
+        (width, _), _ = font.font.getsize(line + ' ' + word)
 
         if width > max_width - 100:
             return len(line)
         else:
             line += ' ' + word if len(line) != 0 else word
 
+
     return len(line)
 
-def make_text_wrapper(main_text, sender_text, font, image, text_color, padding_left, padding_top):
+def make_text_wrapper(main_text, sender_text, font, image, text_color, background_color, padding_left, padding_top, padding_bottom):
     # main_lines = textwrap.wrap(main_text)
     # sender_lines = textwrap.wrap(sender_text)
 
@@ -89,8 +100,8 @@ def make_text_wrapper(main_text, sender_text, font, image, text_color, padding_l
         sender_lines_height += get_box_sizes(line, font)
 
     sum_heights = main_lines_height + sender_lines_height
-    all_paddings = padding_top * 2
-    wrapper = Image.new("RGB", (image.width, sum_heights + all_paddings), "black")
+    all_paddings = padding_top * 2 + padding_bottom
+    wrapper = Image.new("RGB", (image.width, sum_heights + all_paddings), background_color)
 
     end_height = add_main_text(main_lines, font, text_color, wrapper, padding_left, 0, padding_top)
     add_sender_text(sender_lines, font, text_color, wrapper, padding_left, end_height, padding_top)
@@ -109,32 +120,24 @@ def delete_stored_image(image_name):
     os.remove('./image_service/results/' + image_name)
 
 def start_processing(image_name, message_sender, text):
-    # image_name = sys.argv[1]
-    # message_sender = sys.argv[2]
-    # text = ""
-    # if len(sys.argv) == 4:
-    #     text = sys.argv[3]
-    # else:
-    #     text = 'Блок 1. Дверь в тренерское помещение. Дверь не соотвутствует размерам в спецификации. Составить акт, и в случае косяка производителя - написать претензию'
-
-    # if len(text) == 0:
-    #     text = 'Блок 1. Дверь в тренерское помещение. Дверь не соотвутствует размерам в спецификации. Составить акт, и в случае косяка производителя - написать претензию'
-
-    font_name = 'arial'
-    text_color = (255, 255, 0)
-    padding_left = 15
-    padding_top = 15
+    koef = int(config('FONT_COEFFICIENT'))
+    font_name = config('FONT_NAME')
+    text_color = config('TEXT_COLOR')
+    background_color = config('BACKGROUND_COLOR')
+    padding_left = int(config('PADDING_LEFT'))
+    padding_top = int(config('PADDING_TOP'))
+    padding_bottom = int(config('PADDING_BOTTOM'))
 
     image = Image.open(f'./image_service/images/{image_name}')
 
-    fontsize = image.size[0] * 0.02
+    fontsize = image.size[0] * 0.02 * koef
     if fontsize < 12:
         fontsize = 12
     font = ImageFont.truetype(f"./image_service/fonts/{font_name}.ttf", fontsize)
 
     sender_text = get_message_data(message_sender)
 
-    text_wrapper = make_text_wrapper(text, sender_text, font, image, text_color, padding_left, padding_top)
+    text_wrapper = make_text_wrapper(text, sender_text, font, image, text_color, background_color, padding_left, padding_top, padding_bottom)
     resulting_image = combine_images(image, text_wrapper)
 
     resulting_image.save(f'./image_service/results/{image_name}')
