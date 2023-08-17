@@ -3,5 +3,13 @@ services:
     build: .
     container_name: bot_app
     command: python ./main.py
+    environment:
+      - PADDING_TOP=${PADDING_TOP}
+      - PADDING_BOTTOM=${PADDING_BOTTOM}
+      - PADDING_LEFT=${PADDING_LEFT}
+      - TEXT_COLOR=${TEXT_COLOR}
+      - BACKGROUND_COLOR=${BACKGROUND_COLOR}
+      - FONT_NAME=${FONT_NAME}
+      - FONT_COEFFICIENT=${FONT_COEFFICIENT}
     volumes:
     - .:/usr/src/app
