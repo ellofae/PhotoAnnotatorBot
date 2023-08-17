@@ -4,6 +4,7 @@ ____
 Запуск бота: 
 
 Docker: ./docker.sh
+
 Локально: python main.py
 
 * Пример .env файла:
