@@ -22,7 +22,7 @@ FONT_NAME = arial
 FONT_COEFFICIENT = 1
 
 ## Пример работы бота
-![main](https://github.com/ellofae/Polaroid-Converter-Py/blob/main/image_service/images/example_image.PNG?raw=true)
+![main](https://i.imgur.com/JtK9B5P.png)
 
 
 ____
