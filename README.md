@@ -8,13 +8,22 @@ ____
 API_TOKEN={BOT_TOKEN}
 
 PADDING_TOP = 15
+
 PADDING_BOTTOM = 15
+
 PADDING_LEFT = 15
 
 TEXT_COLOR = #ffff00
+
 BACKGROUND_COLOR = #000000
+
 FONT_NAME = arial
+
 FONT_COEFFICIENT = 1
+
+## Пример работы бота
+![main](https://github.com/ellofae/Polaroid-Converter-Py/blob/main/image_service/images/example_image.PNG?raw=true)
+
 
 ____
 Запуск утилиты отдельно(при использовании sys.args): python main.py {image_name}.{format} {user_name} {text:OPTIONAL}
