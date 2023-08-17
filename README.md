@@ -1,7 +1,10 @@
 # Polaroid-Converter-Py
 
 ____
-Запуск бота: python main.py
+Запуск бота: 
+
+Docker: ./docker.sh
+Локально: python main.py
 
 * Пример .env файла:
 
