@@ -120,7 +120,7 @@ def delete_stored_image(image_name):
     os.remove('./image_service/results/' + image_name)
 
 def start_processing(image_name, message_sender, text):
-    koef = int(config('FONT_COEFFICIENT'))
+    koef = float(config('FONT_COEFFICIENT'))
     font_name = config('FONT_NAME')
     text_color = config('TEXT_COLOR')
     background_color = config('BACKGROUND_COLOR')
