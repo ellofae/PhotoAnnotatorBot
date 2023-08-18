@@ -14,10 +14,9 @@ def get_box_sizes(text, font):
 def get_message_data(message_sender):
     current_time = datetime.now()
 
-    date = current_time.strftime('%Y-%m-%d')
-    timer = current_time.strftime('%H:%M')
+    date = current_time.strftime('%Y-%m-%d %H:%M')
 
-    text = f'@{message_sender}, {date}, {timer}'
+    text = f'@{message_sender}, {date}'
     return text
 
 def add_main_text(text, font, text_color, image, padding_left, start_position, padding_top):
