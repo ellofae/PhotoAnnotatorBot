@@ -1,5 +1,6 @@
 import os
 import textwrap
+import tempfile
 from datetime import datetime
 from decouple import config
 
@@ -96,7 +97,8 @@ def start_processing(image_name, message_sender, text):
     padding_top = int(config('PADDING_TOP'))
     padding_bottom = int(config('PADDING_BOTTOM'))
 
-    image = Image.open(f'./image_service/images/{image_name}')
+    #image = Image.open(f'./image_service/images/{image_name}')
+    image = Image.open(image_name)
 
     fontsize = image.size[0] * 0.02 * koef
     if fontsize < 12:
@@ -108,4 +110,17 @@ def start_processing(image_name, message_sender, text):
     text_wrapper = make_text_wrapper(text, sender_text, font, image, text_color, background_color, padding_left, padding_top, padding_bottom)
     resulting_image = combine_images(image, text_wrapper)
 
-    resulting_image.save(f'./image_service/results/{image_name}')
+    #resulting_image.save(f'./image_service/results/{image_name}')
+    file_base_name = os.path.basename(image_name)
+    file_name, extension = os.path.splitext(file_base_name)
+    
+    processed_filepath = ''
+    with tempfile.NamedTemporaryFile(suffix=extension,prefix=f'processed_{file_name}', delete=False) as temp_file:
+        try:
+            resulting_image.save(temp_file.name)
+            temp_file.seek(0)
+            processed_filepath = temp_file.name
+        finally:
+            temp_file.close()
+    
+    return processed_filepath
