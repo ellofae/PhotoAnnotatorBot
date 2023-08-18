@@ -1,6 +1,7 @@
 from decouple import config
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import ContentType, Message, InputFile
+from datetime import datetime
 
 from image_service.main import start_processing, delete_stored_image
 
@@ -18,7 +19,7 @@ async def start_command(message: Message):
 @dp.message_handler(content_types=types.ContentType.PHOTO)
 async def handle_photo(message: types.Message):
     current_user = message.from_user.username
-
+    
     photo = message.photo[-1]
 
     caption_text = message.caption
@@ -46,4 +47,5 @@ async def handle_photo(message: types.Message):
 
 
 if __name__ == '__main__':
+   print(datetime.now().strftime('%Y-%m-%d %H:%M'))
    executor.start_polling(dp, skip_updates=True)

@@ -13,3 +13,5 @@ services:
       - FONT_COEFFICIENT=${FONT_COEFFICIENT}
     volumes:
     - .:/usr/src/app
+    - "/etc/timezone:/etc/timezone:ro"
+    - "/etc/localtime:/etc/localtime:ro"
