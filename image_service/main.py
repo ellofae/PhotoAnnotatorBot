@@ -84,10 +84,6 @@ def combine_images(image, text_wrapper):
 
     return image_wrapper
 
-def delete_stored_image(image_name):
-    os.remove('./image_service/images/' + image_name)
-    os.remove('./image_service/results/' + image_name)
-
 def start_processing(image_name, message_sender, text):
     koef = float(config('FONT_COEFFICIENT'))
     font_name = config('FONT_NAME')
@@ -97,7 +93,6 @@ def start_processing(image_name, message_sender, text):
     padding_top = int(config('PADDING_TOP'))
     padding_bottom = int(config('PADDING_BOTTOM'))
 
-    #image = Image.open(f'./image_service/images/{image_name}')
     image = Image.open(image_name)
 
     fontsize = image.size[0] * 0.02 * koef
@@ -110,7 +105,6 @@ def start_processing(image_name, message_sender, text):
     text_wrapper = make_text_wrapper(text, sender_text, font, image, text_color, background_color, padding_left, padding_top, padding_bottom)
     resulting_image = combine_images(image, text_wrapper)
 
-    #resulting_image.save(f'./image_service/results/{image_name}')
     file_base_name = os.path.basename(image_name)
     file_name, extension = os.path.splitext(file_base_name)
     

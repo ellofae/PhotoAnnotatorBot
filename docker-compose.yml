@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    container_name: bot_app
+    container_name: photo_annotator
     command: python ./main.py
     environment:
       - PADDING_TOP=${PADDING_TOP}
