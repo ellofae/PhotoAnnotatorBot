@@ -1,36 +1,30 @@
 # PhotoAnnotatorBot
-Бот, созданный на базе библиотеки aiogram, является идеальным инструментом для обработки изображений. Бот позволяет добавлять текст на изображение, чтобы сделать его более информативным.
-Пользователь может загрузить любое изображение и написать любой текст, а бот мгновенно вернет обработанное изображение с добавленным текстом.
 
-Утилита для добавления текста на изображения написана на Python при помощи библиотеки Pillow. С ее помощью вы можете легко и быстро добавлять текст на изображения, делая их более информативными и выразительными.
-Благодаря использованию мощной библиотеки Pillow, утилита позволяет осуществлять широкий спектр операций с текстом, таких как изменение размера, выбор шрифта, цвета и стиля.
+A bot based on the aiogram library is an ideal tool for image processing. The bot allows you to add text to an image to make it more informative.
+The user can upload any image in Telegram and write any text and the bot will instantly return the processed image with added text.
 
-## Способы запуска бота:
-____
+The utility for adding text to images is written in Python using the Pillow library. You can quickly and easily add text to images, making them more informative and expressive.
+Thanks to the use of the powerful Pillow library, the utility allows you to perform a wide range of text operations such as resizing, font, color and style selection.
 
-* Docker: ./docker.sh
+## Ways to launch the bot: 
 
-*  Локально: python main.py
+* Docker: `./docker.sh` or `docker-compose up`
+* Direct: `python main.py` (requirements.txt should be processed before)
 
-## Пример .env файла
-____
+## Configuration
 
+add the `.env` file:
+
+```
 API_TOKEN={BOT_TOKEN}
+PADDING_TOP=15
+PADDING_BOTTOM=15
+PADDING_LEFT=15
+TEXT_COLOR=#ffff00
+BACKGROUND_COLOR=#000000
+FONT_NAME=arial
+FONT_COEFFICIENT=1
+```
 
-PADDING_TOP = 15
-
-PADDING_BOTTOM = 15
-
-PADDING_LEFT = 15
-
-TEXT_COLOR = #ffff00
-
-BACKGROUND_COLOR = #000000
-
-FONT_NAME = arial
-
-FONT_COEFFICIENT = 1
-
-## Пример работы бота
-___
+## Work sample 
 ![main](https://i.imgur.com/JtK9B5P.png)
