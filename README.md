@@ -25,6 +25,3 @@ BACKGROUND_COLOR=#000000
 FONT_NAME=arial
 FONT_COEFFICIENT=1
 ```
-
-## Work sample 
-![main](https://i.imgur.com/JtK9B5P.png)
